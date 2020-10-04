@@ -20,7 +20,7 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <form action="./setRate/" method="POST">{% csrf_token %}
+                    <form action="./" method="POST">{% csrf_token %}
                         <div class="form-group">
                             <label>Name</label>
                             <input type="text" class="form-control" name="m_name" id="m_name" placeholder="name">
@@ -32,6 +32,19 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input type="password" class="form-control" name="m_pw" id="m_pw" placeholder="Password">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label>예적금</label>
+                            <input type="number" class="form-control" name="m_sdrate" id="m_sdrate" placeholder="20%">
+                        </div>
+                        <div class="form-group">
+                            <label>주식</label>
+                            <input type="number" class="form-control" name="m_srate" id="m_srate" placeholder="40%">
+                        </div>
+                        <div class="form-group">
+                            <label>펀드</label>
+                            <input type="number" class="form-control" name="m_frate" id="m_frate" placeholder="40%">
                         </div>
                         <button type="submit" class="btn btn-primary" >NEXT</button>
                     </form>

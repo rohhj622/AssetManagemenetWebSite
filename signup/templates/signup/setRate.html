@@ -20,19 +20,8 @@
             </div>
             <div class="row">
                 <div class="col-12">
-                    <form action="registMem/" method="POST">{% csrf_token %}
-                        <div class="form-group">
-                            <label>예적금</label>
-                            <input type="number" class="form-control" name="m_sdrate" id="m_sdrate" placeholder="20%">
-                        </div>
-                        <div class="form-group">
-                            <label>주식</label>
-                            <input type="number" class="form-control" name="m_srate" id="m_srate" placeholder="40%">
-                        </div>
-                        <div class="form-group">
-                            <label>펀드</label>
-                            <input type="number" class="form-control" name="m_frate" id="m_frate" placeholder="40%">
-                        </div>
+                    <form action="./registMem/" method="POST">{% csrf_token %}
+
                         <input type="hidden" name="m_id" id="m_id" value="{{new_mem.m_id}}"/>
                         <input type="hidden" name="m_pw" id="m_pw" value="{{new_mem.m_pw}}"/>
                         <input type="hidden" name="m_name" id="m_name" value="{{new_mem.m_name}}"/>
