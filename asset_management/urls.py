@@ -20,5 +20,8 @@ urlpatterns = [
     path('', include('main_page.urls')),
     path('signup/', include('signup.urls')),
     path('signin/', include('signin.urls')),
+    path('signout/', include('signout.urls')),
+    path('mypage/', include('mypage.urls')),
+
 
 ]

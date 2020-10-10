@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .models import *
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -21,11 +22,18 @@ def signup(request):
 
         print(m_name, m_id, m_pw, m_sdrate, m_srate, m_frate)
 
-        # model
+        # 자체 DB model
         new_mem = Member(m_id=m_id, m_pw=m_pw, m_name=m_name,
                          m_sdrate=m_sdrate, m_srate=m_srate, m_frate=m_frate)
 
         # db insert
         new_mem.save()
+
+        # django 제공 user 관리
+        user = User.objects.create_user(username=m_id, password=m_pw, first_name=m_name)
+        # db 저장
+        user.save()
+
+        request.session.flush()
 
         return render(request, 'main_page/main.html')

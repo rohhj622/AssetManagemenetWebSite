@@ -71,6 +71,13 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
+
+# 세션 창 닫으면 꺼지게
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+
 WSGI_APPLICATION = 'asset_management.wsgi.application'
 
 
