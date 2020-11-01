@@ -14,10 +14,16 @@ def mypageOpen(request):
     if request.method == 'GET':
         if Asset.objects.filter().order_by('-a_id'):  # 차있다면
 
-            # 전체 데이터 담아서 보낼 리스트
-            all_data = []
+            # 전체 데이터 담아서 보낼 딕셔너리 (현재 아이디 기본 정보, 현재 자산 비율, 전체 자산 현황//자세함,
+            # 지난 자산의 흐름 ,이상적인 자산을 맞추기 위한 가격)
+            all_data = {}
             # 지난 자산 현황 축적할 딕셔너리
             acc_tot = {}
+            # 현재 자산 비율 딕셔너리
+            mem_c_rate = {}
+
+            # 현재  예적금, 주식, 펀드, 총 자산
+            cur_asset = [0, 0, 0, 0]
 
             """
                 1. 현재 아이디 정보를 보내야함(기본 정보들 있는 거)
@@ -32,7 +38,7 @@ def mypageOpen(request):
             print(mem)
 
             # 현재 아이디의 기본 정보 all_data 에 append
-            all_data.append(mem)
+            all_data['mem'] = mem
 
             # 2. Asset 에 있는 아이디 의 자산 정보 모두 가져옴 오름차순 정렬 (현재가 맨 앞에 오게)
             assets = Asset.objects.filter(m_id=m_id).order_by('a_datetime').values()
@@ -48,20 +54,25 @@ def mypageOpen(request):
                     stock = int(assets[i]['a_stock'])
                     fund = int(assets[i]['a_fund'])
 
-                    total = saving + deposit + stock + fund
+                    cur_asset[0] = saving + deposit
+                    cur_asset[1] = stock
+                    cur_asset[2] = fund
+                    cur_asset[3] = saving + deposit + stock + fund
 
                     # 지난 자산 현황을 나타내기 위한 딕셔너리에 전체 금액을 추가함
-                    acc_tot[str(assets[i]['a_datetime'])] = total
+                    acc_tot[str(assets[i]['a_datetime'])] = cur_asset[3]
 
-                    r_sa = int((saving + deposit) / total * 100)  # 예적금 비율
-                    r_st = int(stock / total * 100)  # 주식 비율
+                    r_sa = int((saving + deposit) / cur_asset[3] * 100)  # 예적금 비율
+                    r_st = int(stock / cur_asset[3] * 100)  # 주식 비율
                     r_fu = int(100 - r_sa - r_st)  # 펀드 비율
 
                     # 현재 비율 딕셔너리
-                    mem_c_rate = {'r_sa': r_sa, 'r_st': r_st, 'r_fu': r_fu}
+                    mem_c_rate['r_sa'] = r_sa
+                    mem_c_rate['r_st'] = r_st
+                    mem_c_rate['r_fu'] = r_fu
 
-                    # 모든 데이터를 담을 리스트에 추가
-                    all_data.append(mem_c_rate)
+                    # 모든 데이터를 담을 리스트에 추가 2
+                    all_data['mem_c_rate'] = mem_c_rate
                     print(r_sa, r_st, r_fu)
 
                 # 2-2.과거 자산들 비율 계산 없이 그냥 총합만 계산
@@ -72,11 +83,38 @@ def mypageOpen(request):
                     # 지난 자산 현황을 나타내기 위한 딕셔너리에 전체 금액을 추가함
                     acc_tot[str(assets[i]['a_datetime'])] = total
 
-            print(acc_tot)
-            all_data.append(assets)
+            # all_data.append(assets)
+            all_data['acc_tot'] = acc_tot
+
+            # 현재 자산 비율을 이상적인 비율을 맞추기 위해서 해야할 것
+            # 필요한 거  : 현재 비율, 현재 가격, 현재 총합, 이상 비율, 이상 비율에 맞춘 가격
+
+            idle_asset = {}
+
+            # 이상 비율에 맞춘 가격 구하기  (비율 * 전체 / 100)
+            idle_sd = mem['m_sdrate'] * cur_asset[0] / 100  # 이상적인 예적금 가격
+            idle_s = mem['m_srate'] * cur_asset[0] / 100  # 이상적인 주식 가격
+            idle_f = mem['m_frate'] * cur_asset[0] / 100  # 이상적인 펀드 가격
+
+            idle_asset['sub_idle_sd'] = int(cur_asset[0] - idle_sd)
+            idle_asset['sub_idle_s'] = int(cur_asset[1] - idle_s)
+            idle_asset['sub_idle_f'] = int(cur_asset[2] - idle_f)
+
+            all_data['idle_asset'] = idle_asset
 
             print(all_data)
-            return render(request, 'mypage/mypage.html', mem)
+
+            print(type(mem))
+            print(type(acc_tot))
+            print(type(mem_c_rate))
+            print(type(idle_asset))
+            print(type(all_data))
+
+            test ={'hi':'bye'}
+            print('iaam hereeeeeee')
+            return render(request, 'mypage/mypage.html', test)
+            # return render(request, 'mypage/mypage.html', all_data)
+
         else:  # 비었다면
             return render(request, 'manage_asset/new_asset.html')
 

@@ -37,17 +37,18 @@
     <body>
         <div class="container">
             <div class="row">
-<!--                {% if mem %}-->
-<!--                {% for key, val in mem %}-->
-<!--                    <p> {{key}}, {{val}} </p>-->
-<!--                {% endfor %}-->
-<!--                {% else %}-->
-<!--                    <p> ddiyong</p>-->
-<!--                {% endif %}-->
                 <div class="col-12 align-self-center">
-                    <h1>{{m_name}} 님의 총 자산은 </h1>
-                </div>
+                    {% if test %}
+                    <h2>성공</h2>
+                    {% else %}
+                    <h3>왜 안오ㅘ</h3>
+                    {% endif %}
 
+                    {% for a in test %}
+                    <h1>{{ a }}</h1>
+                    {% endfor %}
+
+                </div>
             </div>
 
             <div class="row justify-content-end">
