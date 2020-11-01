@@ -1,5 +1,6 @@
 # controller
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import *
 from django.contrib.auth.models import User
@@ -36,4 +37,4 @@ def signup(request):
 
         request.session.flush()
 
-        return render(request, 'main_page/main.html')
+        return render(request, 'signup/signUpResult.html')

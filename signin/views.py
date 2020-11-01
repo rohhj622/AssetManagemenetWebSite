@@ -28,22 +28,3 @@ def signin(request):
             return redirect('/')
         else:
             return render(request, 'signin/signinResult.html')
-
-        # # 만약 아이디랑 페스워드가 맞다면? 1, 아니면 0
-        # is_true = Member.objects.all().filter(Q(m_id=m_id) & Q(m_pw=m_pw)).count()
-        #
-        # print(is_true)
-        #
-        # if is_true == 1:
-        #     # 세션에 값 추가
-        #     # request.session['m_id'] = m_id
-        #     # 여기엔 직접 url을 적어야함
-        #
-        #     # if request.session.get('m_id'):
-        #     #     print(request.session.get('m_id'))
-        # #     #     del (request.session.get['m_id'])
-        # #
-        # #     return redirect('/')  # 여기엔 직접 url을 적어야함
-        #
-        # elif is_true == 0:
-        #     return render(request, 'signin/signinResult.html')

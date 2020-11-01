@@ -22,6 +22,7 @@ urlpatterns = [
     path('signin/', include('signin.urls')),
     path('signout/', include('signout.urls')),
     path('mypage/', include('mypage.urls')),
+    path('manageasset/', include('manage_asset.urls')),
 
 
 ]

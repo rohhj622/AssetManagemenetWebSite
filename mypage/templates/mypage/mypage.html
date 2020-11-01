@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+     <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                    crossorigin="anonymous"></script>
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+     <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            var data = google.visualization.arrayToDataTable([
+              ['Task', 'Hours per Day'],
+              ['Work',     11],
+              ['Eat',      2],
+              ['Commute',  2],
+              ['Watch TV', 2],
+              ['Sleep',    7]
+            ]);
+
+            var options = {
+              title: 'My Daily Activities'
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+          }
+        </script>
+ </head>
+    <body>
+        <div class="container">
+            <div class="row">
+<!--                {% if mem %}-->
+<!--                {% for key, val in mem %}-->
+<!--                    <p> {{key}}, {{val}} </p>-->
+<!--                {% endfor %}-->
+<!--                {% else %}-->
+<!--                    <p> ddiyong</p>-->
+<!--                {% endif %}-->
+                <div class="col-12 align-self-center">
+                    <h1>{{m_name}} 님의 총 자산은 </h1>
+                </div>
+
+            </div>
+
+            <div class="row justify-content-end">
+                {% if user.is_authenticated %}
+                    <div class="col-2">
+                        <form action="./mypage" method="GET">
+                            <button type="submit" class="btn btn-primary">MyPage</button>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                        <form action="./signout" method="GET">
+                            <button type="submit" class="btn btn-primary">SIGN OUT</button>
+                        </form>
+                    </div>
+                {% else %}
+                    <div class="col-2">
+                        <form action="./signup" method="GET">
+                            <button type="submit" class="btn btn-primary">SIGN UP</button>
+                        </form>
+                    </div>
+                    <div class="col-2">
+                        <form action="./signin" method="GET">
+                            <button type="submit" class="btn btn-primary">SIGN IN</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+            <div id="piechart" style="width: 900px; height: 500px;"></div>
+        </div>
+    </body>
+</html>

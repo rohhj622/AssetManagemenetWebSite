@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'signup',
     'main_page',
     'signin',
+    'mypage',
+    'manage_asset',
 ]
 
 MIDDLEWARE = [
