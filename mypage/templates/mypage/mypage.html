@@ -9,6 +9,7 @@
      <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
                     crossorigin="anonymous"></script>
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
      <script type="text/javascript">
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
@@ -34,18 +35,112 @@
             chart.draw(data, options);
           }
         </script>
+
+        <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['line']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+
+              var data = new google.visualization.DataTable();
+              data.addColumn('number', 'Day');
+              data.addColumn('number', 'Guardians of the Galaxy');
+
+              data.addRows([
+                [1,  2],
+                [2,  4],
+                [3,  5],
+              ]);
+<!--               data.addRows([-->
+<!--                "{% for k,v in acc_tot.items %}"-->
+<!--                   ["{{k}}", Number("{{v}}")],-->
+<!--                "{% endfor %}"-->
+
+<!--              ]);-->
+
+
+              var options = {
+                chart: {
+                  title: 'Box Office Earnings in First Two Weeks of Opening',
+                  subtitle: 'in millions of dollars (USD)'
+                },
+                width: 900,
+                height: 500,
+                axes: {
+                  x: {
+                    0: {side: 'top'}
+                  }
+                }
+              };
+
+              var chart = new google.charts.Line(document.getElementById('line_top_x'));
+
+              chart.draw(data, google.charts.Line.convertOptions(options));
+            }
+        </script>
+
+        <script>
+            google.charts.load('current', {packages: ['corechart', 'line']});
+google.charts.setOnLoadCallback(drawBasic);
+
+function drawBasic() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('number', 'X');
+      data.addColumn('number', 'Dogs');
+
+      data.addRows([
+        [1, 0],   [1, 10],  [2, 23],  [3, 17],  [4, 18],  [5, 9],
+        [6, 11],  [7, 27],  [8, 33],  [9, 40],  [10, 32], [11, 35],
+        [12, 30], [13, 40], [14, 42], [15, 47], [16, 44], [17, 48],
+        [18, 52], [19, 54], [20, 42], [21, 55], [22, 56], [23, 57],
+        [24, 60], [25, 50], [26, 52], [27, 51], [28, 49], [29, 53],
+        [30, 55], [31, 60], [32, 61], [33, 59], [34, 62], [35, 65],
+        [36, 62], [37, 58], [38, 55], [39, 61], [40, 64], [41, 65],
+        [42, 63], [43, 66], [44, 67], [45, 69], [46, 69], [47, 70],
+        [48, 72], [49, 68], [50, 66], [51, 65], [52, 67], [53, 70],
+        [54, 71], [55, 72], [56, 73], [57, 75], [58, 70], [59, 68],
+        [60, 64], [61, 60], [62, 65], [63, 67], [64, 68], [65, 69],
+        [66, 70], [67, 72], [68, 75], [69, 80]
+      ]);
+
+      var options = {
+        hAxis: {
+          title: 'Time'
+        },
+        vAxis: {
+          title: 'Popularity'
+        }
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+
+        </script>
  </head>
     <body>
         <div class="container">
             <div class="row">
                 <div class="col-12 align-self-center">
-                    <h1>My Page</h1>
+                    <h1 style="text-align:center;">My Page</h1>
                 </div>
             </div>
-            <h3>{{ mem.m_name }} 님의 총 자산은 {{ acc_tot_now.acc_tot_now }}원 입니다.</h3>
+            <br>
             <div class="row">
-                <div class="col-12">
-                    <table class="table">
+                <div class="col-12 align-self-center">
+                    <h3 style="text-align:center;">{{ mem.m_name }} 님의 총 자산은 {{ acc_tot_now.acc_tot_now }}원 입니다.</h3>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-8 align-self-center" style="margin:auto;">
+                    <div id="piechart" style="width:auto; margin:auto; height:30rem;"></div>
+                </div>
+                <div class="col-4">
+                    <table class="table" style="margin-top:5rem;">
                         <tr>
                             <td colspan="2">이상 비율({{mem.m_sdrate}},{{mem.m_srate}},{{mem.m_frate}})을 맞추기 위한 금액</td>
                         </tr>
@@ -63,9 +158,13 @@
                         </tr>
                     </table>
                 </div>
-
             </div>
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
+<div id="chart_div"></div>
+
         </div>
+        {% for k,v in acc_tot.items %}
+            {{k}}, {{v}}
+            {{ k|date:"YMd" }}
+        {% endfor %}
     </body>
 </html>
