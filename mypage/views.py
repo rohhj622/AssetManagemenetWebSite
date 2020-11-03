@@ -19,8 +19,10 @@ def mypageOpen(request):
             all_data = {}
             # 지난 자산 현황 축적할 딕셔너리
             acc_tot = {}
+
             # 현재 자산 비율 딕셔너리
             mem_c_rate = {}
+
             # 지금 총 자산 딕셔너리
             acc_tot_now = {}
 
@@ -65,6 +67,9 @@ def mypageOpen(request):
                     acc_tot[str(assets[i]['a_datetime'])] = cur_asset[3]
 
                     # 현재 총 자산 딕셔너리
+                    acc_tot_now['acc_sd_now'] = cur_asset[0]
+                    acc_tot_now['acc_s_now'] = cur_asset[1]
+                    acc_tot_now['acc_f_now'] = cur_asset[2]
                     acc_tot_now['acc_tot_now'] = cur_asset[3]
 
                     r_sa = int((saving + deposit) / cur_asset[3] * 100)  # 예적금 비율
@@ -98,13 +103,14 @@ def mypageOpen(request):
             idle_asset = {}
 
             # 이상 비율에 맞춘 가격 구하기  (비율 * 전체 / 100)
-            idle_sd = mem['m_sdrate'] * cur_asset[0] / 100  # 이상적인 예적금 가격
-            idle_s = mem['m_srate'] * cur_asset[0] / 100  # 이상적인 주식 가격
-            idle_f = mem['m_frate'] * cur_asset[0] / 100  # 이상적인 펀드 가격
+            idle_sd = mem['m_sdrate'] * cur_asset[3] / 100  # 이상적인 예적금 가격
+            print(idle_sd)
+            idle_s = mem['m_srate'] * cur_asset[3] / 100  # 이상적인 주식 가격
+            idle_f = mem['m_frate'] * cur_asset[3] / 100  # 이상적인 펀드 가격
 
-            idle_asset['sub_idle_sd'] = int(cur_asset[0] - idle_sd)
-            idle_asset['sub_idle_s'] = int(cur_asset[1] - idle_s)
-            idle_asset['sub_idle_f'] = int(cur_asset[2] - idle_f)
+            idle_asset['sub_idle_sd'] = int(idle_sd - cur_asset[0])
+            idle_asset['sub_idle_s'] = int(idle_s - cur_asset[1])
+            idle_asset['sub_idle_f'] = int(idle_f - cur_asset[2])
 
             all_data['idle_asset'] = idle_asset
 
