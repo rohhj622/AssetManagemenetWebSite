@@ -10,3 +10,8 @@ from django.db.models import Count
 def new_asset(request):
     return render(request, 'manage_asset/new_asset.html')
 
+
+def cal_asset(request):
+    return render(request, 'main_page/main.html')
+    # return render(request,'')
+

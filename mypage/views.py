@@ -12,8 +12,8 @@ def mypageOpen(request):
     m_id = request.user.get_username()
 
     if request.method == 'GET':
-        if Asset.objects.filter().order_by('-a_id'):  # 차있다면
-
+        if Asset.objects.filter(m_id=m_id).order_by('-a_id'):  # 차있다면
+            print('dksl dlTsmsep?')
             # 전체 데이터 담아서 보낼 딕셔너리 (현재 아이디 기본 정보, 현재 자산 비율, 전체 자산 현황//자세함,
             # 지난 자산의 흐름 ,이상적인 자산을 맞추기 위한 가격)
             all_data = {}
@@ -21,6 +21,8 @@ def mypageOpen(request):
             acc_tot = {}
             # 현재 자산 비율 딕셔너리
             mem_c_rate = {}
+            # 지금 총 자산 딕셔너리
+            acc_tot_now = {}
 
             # 현재  예적금, 주식, 펀드, 총 자산
             cur_asset = [0, 0, 0, 0]
@@ -62,6 +64,9 @@ def mypageOpen(request):
                     # 지난 자산 현황을 나타내기 위한 딕셔너리에 전체 금액을 추가함
                     acc_tot[str(assets[i]['a_datetime'])] = cur_asset[3]
 
+                    # 현재 총 자산 딕셔너리
+                    acc_tot_now['acc_tot_now'] = cur_asset[3]
+
                     r_sa = int((saving + deposit) / cur_asset[3] * 100)  # 예적금 비율
                     r_st = int(stock / cur_asset[3] * 100)  # 주식 비율
                     r_fu = int(100 - r_sa - r_st)  # 펀드 비율
@@ -84,6 +89,7 @@ def mypageOpen(request):
                     acc_tot[str(assets[i]['a_datetime'])] = total
 
             # all_data.append(assets)
+            all_data['acc_tot_now'] = acc_tot_now
             all_data['acc_tot'] = acc_tot
 
             # 현재 자산 비율을 이상적인 비율을 맞추기 위해서 해야할 것
@@ -110,11 +116,8 @@ def mypageOpen(request):
             print(type(idle_asset))
             print(type(all_data))
 
-            test ={'hi':'bye'}
             print('iaam hereeeeeee')
-            return render(request, 'mypage/mypage.html', test)
-            # return render(request, 'mypage/mypage.html', all_data)
-
+            return render(request, 'mypage/mypage.html', all_data)
         else:  # 비었다면
             return render(request, 'manage_asset/new_asset.html')
 
