@@ -19,7 +19,7 @@
             <div class="row">
                 <div class="col-12">
                     <!--         이러면 /mypage/에 post 방식으로, 일은 manage_asset에서        -->
-                    <form action="./" method="POST">{% csrf_token %}
+                    <form action="/mypage/" method="POST">{% csrf_token %}
                         <div class="form-group">
                             <label>적금</label>
                             <input type="number" class="form-control" name="a_saving" id="a_saving" placeholder="200000">

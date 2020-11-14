@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'signin',
     'mypage',
     'manage_asset',
+    'board',
 ]
 
 MIDDLEWARE = [

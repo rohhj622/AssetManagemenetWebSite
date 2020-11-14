@@ -1,9 +1,6 @@
 from django.db import models
 from django.utils.timezone import now
 
-
-
-
 # Create your models here.
 class Asset(models.Model):
     a_id = models.AutoField(primary_key=True)

@@ -23,6 +23,7 @@ urlpatterns = [
     path('signout/', include('signout.urls')),
     path('mypage/', include('mypage.urls')),
     path('manageasset/', include('manage_asset.urls')),
+    path('board/', include('board.urls')),
 
 
 ]

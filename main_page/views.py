@@ -8,3 +8,4 @@ from .models import *
 
 def mainpageOpen(request):
     return render(request, 'main_page/main.html')
+    # return render(request, 'main_page/main2.html')
