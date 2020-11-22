@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+                    crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+
+    <title>Title</title>
+    <script type="text/javascript">
+        var nab1 = 0;
+        var ki1 = 0;
+        var ejau1 = 0;
+        var chong1 = 0;
+        var won1 = 0;
+        var eja1 = 0;
+
+        $(document).on("keyup","input[name='nab']",function(){
+            nab1 = $('input[name=nab]').val();
+
+            won1 = nab1 * ki1;
+            eja1 = won1 * ejau1;
+            chong1 = won1 + eja1;
+
+            $('#chong').text(String(chong1)+'원');
+            $('#eja').text(String(eja1)+'원');
+            $('#won').text(String(won1)+'원');
+
+        });
+
+        $(document).on("keyup","input[name='ki']",function(){
+            ki1 = $('input[name=ki]').val();
+
+            won1 = nab1 * ki1;
+            eja1 = won1 * ejau1;
+            chong1 = won1 + eja1;
+
+           $('#chong').text(String(chong1)+'원');
+            $('#eja').text(String(eja1)+'원');
+            $('#won').text(String(won1)+'원');
+
+        });
+
+        $(document).on("keyup","input[name='ejau']",function(){
+            ejau1 = $('input[name=ejau]').val();
+
+            won1 = nab1 * ki1;
+            eja1 = won1 * ejau1/100;
+            chong1 = won1 + eja1;
+
+            $('#chong').text(String(chong1)+'원');
+            $('#eja').text(String(eja1)+'원');
+            $('#won').text(String(won1)+'원');
+
+        });
+
+
+    </script>
+
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1 style="text-align:center;">Expiration Assets</h1>
+        </div>
+        <br>
+
+        <div class="row" style="text-align:center;">
+            <div class="col-12">
+                <form action="/" method="GET">
+                    <button type="submit" class="btn btn-primary btn-sm">Home</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        <div class="row" style="text-align:center;">
+            <table class="table">
+                <thead>
+                    <tr></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>매달 납입 금액</td>
+                        <td colspan="3"><input type="number" name="nab"> 원</td>
+                    </tr>
+                    <tr>
+                        <td>기간</td>
+                        <td colspan="3"><input type="number" name="ki"> 개월</td>
+                    </tr>
+                    <tr>
+                        <td>이자율</td>
+                        <td colspan="3"><input type="number" name="ejau"> %</td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" style="margin:auto;">만기 지급 금액</td>
+                        <td colspan="3"><p id="chong" name="chong"></p></td>
+                    </tr>
+                    <tr>
+                        <td>원금</td>
+                        <td colspan="2" id="won" name="won"></td>
+                    </tr>
+                    <tr>
+                        <td>이자</td>
+                        <td colspan="2" id="eja" name="eja"></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</body>
+</html>

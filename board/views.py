@@ -6,7 +6,7 @@ from .models import *
 
 
 def boardOpen(request):
-    all_board = Board.objects.all().values()
+    all_board = Board.objects.all().order_by('-b_id').values()
 
     return render(request, 'board/read_board.html', {'all_board':all_board})
 

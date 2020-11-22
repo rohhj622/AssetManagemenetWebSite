@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mypage',
     'manage_asset',
     'board',
+    'expiration_date',
 ]
 
 MIDDLEWARE = [

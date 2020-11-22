@@ -44,6 +44,19 @@
                 </div>
             </div>
             <br>
+            <div class="row" style="text-align:center;">
+                <div class="col-6">
+                    <form action="/manageasset" method="GET">
+                        <button type="submit" class="btn btn-primary btn-sm">UpdateAsset</button>
+                    </form>
+                </div>
+                <div class="col-6">
+                    <form action="/" method="GET">
+                        <button type="submit" class="btn btn-primary btn-sm">Home</button>
+                    </form>
+                </div>
+            </div>
+            <br>
             <div class="row">
                 <div class="col-12 align-self-center">
                     <h3 style="text-align:center;">{{ mem.m_name }} 님의 총 자산은 {{ acc_tot_now.acc_tot_now }}원 입니다.</h3>

@@ -14,13 +14,32 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-4"/>
+            <h1 style="text-align:center;">BOARD</h1>
+        </div>
+        <br>
+        <div class="row" style="text-align:center;">
+
+            {% if user.username %}
+            <div class="col-6">
                 <form action="./boardInsert" method="GET">
                     <button type="submit" class="btn btn-primary btn-sm">Write</button>
                 </form>
             </div>
+            <div class="col-6">
+                <form action="/" method="GET">
+                    <button type="submit" class="btn btn-primary btn-sm">Home</button>
+                </form>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <form action="/" method="GET">
+                    <button type="submit" class="btn btn-primary btn-sm">Home</button>
+                </form>
+            </div>
+            {% endif %}
         </div>
-    <div class="row">
+        <br>
+        <div class="row">
         <table class="table">
             <thead class="thread-light">
                 <tr>
@@ -42,6 +61,7 @@
             </tbody>
 
         </table>
+        </div>
     </div>
 </body>
 </html>

@@ -19,7 +19,7 @@
                 </div>
             </div>
             <br>
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" style="text-align:center;">
                 {% if user.is_authenticated %}
                     <div class="col-4"/>
                         <form action="./manageasset" method="GET">
@@ -53,6 +53,12 @@
             <div class="row justify-content-center">
                 <form action="./board" method="GET">
                     <button type="submit" class="btn btn-primary">BOARD</button>
+                </form>
+            </div>
+            <br>
+            <div class="row justify-content-center">
+                <form action="./expirationdate" method="GET">
+                    <button type="submit" class="btn btn-primary">ExpirationAssets</button>
                 </form>
             </div>
         </div>

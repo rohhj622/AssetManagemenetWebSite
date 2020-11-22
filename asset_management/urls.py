@@ -24,6 +24,7 @@ urlpatterns = [
     path('mypage/', include('mypage.urls')),
     path('manageasset/', include('manage_asset.urls')),
     path('board/', include('board.urls')),
+    path('expirationdate/', include('expiration_date.urls')),
 
 
 ]
