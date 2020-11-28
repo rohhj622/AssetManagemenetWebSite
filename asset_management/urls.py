@@ -25,6 +25,7 @@ urlpatterns = [
     path('manageasset/', include('manage_asset.urls')),
     path('board/', include('board.urls')),
     path('expirationdate/', include('expiration_date.urls')),
+    path('searchID/', include('searchID.urls')),
 
 
 ]
