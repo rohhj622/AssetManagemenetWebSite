@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from signup.models import Member
-from .models import Asset
+from .models import Asset, LovedTable
 from django.contrib.auth.models import User
 from django.contrib import auth
 from django.db.models import Count
+from django.core.exceptions import ObjectDoesNotExist
+import json
 
 
 # Create your views here.
@@ -143,9 +145,10 @@ def mypageOpen(request):
 
         return redirect('mypageOpening')
 
+
 def yourpageOpen(request):
     m_id = request.GET.get('m_id2')
-    # m_id = request.user.get_username()
+    m_id2 = request.user.get_username()
 
     if request.method == 'GET':
         if Asset.objects.filter(m_id=m_id).order_by('-a_id'):  # 차있다면
@@ -251,6 +254,15 @@ def yourpageOpen(request):
 
             all_data['idle_asset'] = idle_asset
 
+            try:
+                is_exist = LovedTable.objects.get(l_love=m_id2, l_loved=m_id)
+                print(is_exist)
+                all_data['is_loved'] = is_exist
+
+            except ObjectDoesNotExist:
+                all_data['is_loved'] = 'no'
+                pass
+
             print(all_data)
 
             print(type(mem))
@@ -262,4 +274,15 @@ def yourpageOpen(request):
             return render(request, 'mypage/mypage.html', all_data)
 
 
+def loved(request):
+    print('hi')
 
+    if request.is_ajax():  # ajax 방식일 때 아래 코드 실행
+        l_love = request.GET.get('m_id')
+        l_loved = request.GET.get('m_id2')
+        loved_table = LovedTable(l_love=l_love, l_loved=l_loved)
+        loved_table.save()
+
+        print('OK')
+        context = {'yes': "ok"}
+        return HttpResponse(json.dumps(context), content_type='application/json')

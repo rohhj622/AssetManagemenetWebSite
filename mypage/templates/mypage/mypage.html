@@ -4,57 +4,80 @@
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1">
 
-     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
      <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
                     crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
      <script type="text/javascript">
+
         google.charts.load('current', {'packages':['corechart']});
         google.charts.setOnLoadCallback(drawChart);
 
-        function drawChart() {
-            var sa = "{{ acc_tot_now.acc_sd_now }}";
-            var st = "{{ acc_tot_now.acc_s_now }}";
-            var fu = "{{ acc_tot_now.acc_f_now }}";
+        var id1 = "{{mem.m_id}}";
+        var id2 = "{{user.username}}";
 
-            var data = google.visualization.arrayToDataTable([
+        var sa = "{{ acc_tot_now.acc_sd_now }}";
+        var st = "{{ acc_tot_now.acc_s_now }}";
+        var fu = "{{ acc_tot_now.acc_f_now }}";
+
+        var d1 =[
               ['Task', 'Hours per Day'],
               ['예적금',   Number(sa)],
               ['주식',      Number(st)],
               ['펀드',  Number(fu)],
-            ]);
+            ];
 
+        if (id1!=id2){
+            console.log(id1,id2);
+            sa = "{{ mem_c_rate.r_sa }}";
+            st = "{{ mem_c_rate.r_st }}";
+            fu = "{{ mem_c_rate.r_fu }}";
+
+            d1 = [
+              ['Task', 'Hours per Day'],
+              ['예적금',   Number(sa)],
+              ['주식',      Number(st)],
+              ['펀드',  Number(fu)],
+            ];
+        }
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable(d1);
             var options = {
               title: '자산 분배 현황'
             };
 
             var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
             chart.draw(data, options);
           }
 
-          function drawChart() {
-            var sa = "{{ mem_c_rate.r_sa }}";
-            var st = "{{ mem_c_rate.r_st }}";
-            var fu = "{{ mem_c_rate.r_fu }}";
+        function click_love(){
+            console.log("hi")
+            var m_id = $('input[name=m_id]').val();
+            var m_id2 = $('input[name=m_id2]').val();
+            console.log(m_id)
+            console.log(m_id2)
 
-            var data = google.visualization.arrayToDataTable([
-              ['Task', 'Hours per Day'],
-              ['예적금',   Number(sa)],
-              ['주식',      Number(st)],
-              ['펀드',  Number(fu)],
-            ]);
+            $.ajax({
+                url: "{%url 'loved'%}",
+                data: {
+                    'm_id': m_id,
+                    'm_id2':m_id2,
+                },
+                dataType: "json",
+                success: function (response) { // ajax 통신이 정상적으로 완료되었을 때
+                    console.log("success");
+                    location.reload();
+                },
+                error: function(request,status,error){
+                    alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                }
+            })
+        }
 
-            var options = {
-              title: '자산 분배 현황'
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
-
-            chart.draw(data, options);
-          }
         </script>
  </head>
     <body>
@@ -89,21 +112,29 @@
                  </div>
                 {% endif %}
             </div>
-            <div class="row">
+            <div class="row justify-content-center">
                 {% if mem.m_id == user.username %}
 
                 {% else %}
-                <div class="col-12 align-self-center">
-                    <h4 style="text-align:center;">❤️</h4>
-                </div>
+                    {% if is_loved == 'no' %}
+                    <div class="col-12 align-self-center">
+                        <center> <button class="btn btn-link" id="btn1" onclick="click_love()" style="text-align:center;">🤍</button></center>
+                        <input type="hidden" name="m_id" id="m_id" value="{{user.username}}"/>
+                        <input type="hidden" name="m_id2" id="m_id2" value="{{mem.m_id}}"/>
+                    </div>
+                    {% else %}
+                    <div class="col-12 align-self-center">
+                        <h4 style="text-align:center;">❤️</h4>
+                    </div>
+                    {% endif %}
                 {% endif %}
             </div>
             <br>
             <div class="row justify-content-center">
-                {% if mem.m_id == user.username %}
                 <div class="col-8 align-self-center" style="margin:auto;">
                     <div id="piechart" style="width:auto; margin:auto; height:30rem;"></div>
                 </div>
+                {% if mem.m_id == user.username %}
                 <div class="col-4">
                     <table class="table" style="margin-top:5rem;">
                         <tr>
@@ -124,9 +155,6 @@
                     </table>
                 </div>
                 {% else %}
-                <div class="col-8 align-self-center" style="margin:auto;">
-                    <div id="piechart2" style="width:auto; margin:auto; height:30rem;"></div>
-                </div>
                 <div class="col-4">
                     <table class="table" style="margin-top:5rem;">
                         <tr>

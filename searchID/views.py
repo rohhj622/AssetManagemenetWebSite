@@ -20,6 +20,7 @@ def searchID(request):
             is_exist = Member.objects.filter(m_id__contains=m_id)
             data_dic['mem_list'] = is_exist
             print(is_exist)
+
         except ObjectDoesNotExist:
             pass
 

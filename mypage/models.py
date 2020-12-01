@@ -10,3 +10,8 @@ class Asset(models.Model):
     a_stock = models.IntegerField(null=False)
     a_fund = models.IntegerField(null=False)
     a_datetime = models.DateField(default=now, null=False)
+
+class LovedTable(models.Model):
+    l_idx = models.AutoField(primary_key=True)
+    l_love = models.CharField(max_length=12, null=False)
+    l_loved = models.CharField(max_length=12, null=False)
