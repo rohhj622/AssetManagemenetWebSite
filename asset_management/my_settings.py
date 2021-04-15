@@ -3,7 +3,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'assetManagement',
         'USER': 'root',
-        'PASSWORD': 'shguswls12',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }
